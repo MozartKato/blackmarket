@@ -1,0 +1,10 @@
+Options -MultiViews
+RewriteEngine On
+
+# Mengarahkan semua permintaan ke file tanpa ekstensi .php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Redirect index ke dashboard
+RewriteRule ^index$ /pages/dashboard [L,R=301]
+
