@@ -54,6 +54,10 @@ Use the following credentials to log in for the first time:
 #### Password: admin
 Note: All passwords are securely hashed using PHP's default encryption algorithm (password_hash) for maximum security.
 
+💻 Screenshots
+![LOGIN PAGE](screenshoots/login.png)
+![DASHBOARD PAGE](screenshoots/dashboard.png)
+
 
 ## 📜 License  
 
