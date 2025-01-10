@@ -8,7 +8,7 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] == false) {
 
 require __DIR__ . "../../../includes/connectdb.php";
 
-$adminId = $_SESSION['admin_id'];
+$adminRole = $_SESSION['admin_role'];
 
 // Fungsi untuk mendapatkan data admin dan customer
 function getAdmins($db)
@@ -29,7 +29,7 @@ include __DIR__ . "../../../includes/header.php";
 <div class="admin-menu-container">
     <h1>Admin Menu</h1>
     <div class="admin-customer-container">
-        <?php if ($adminId == 1): ?>
+        <?php if ($adminRole == 'superadmin'): ?>
             <div class="admin-container">
                 <h2>Manage Admins</h2>
                 <button class="action-button" onclick="addAdmin()">Tambah Admin</button>
@@ -39,6 +39,7 @@ include __DIR__ . "../../../includes/header.php";
                             <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -48,6 +49,7 @@ include __DIR__ . "../../../includes/header.php";
                                 <td><?= $admin['Id'] ?></td>
                                 <td><?= $admin['Name'] ?></td>
                                 <td><?= $admin['Email'] ?></td>
+                                <td><?= $admin['role'] ?></td>
                                 <td>
                                     <button class="action-button" onclick="editAdmin(<?= $admin['Id'] ?>)">Edit</button>
                                     <button class="action-button" onclick="deleteAdmin(<?= $admin['Id'] ?>)">Hapus</button>
@@ -104,6 +106,7 @@ include __DIR__ . "../../../includes/footer.php";
                 <input id="admin-name" class="swal2-input" placeholder="Name">
                 <input id="admin-email" class="swal2-input" placeholder="Email">
                 <input id="admin-password" type="password" class="swal2-input" placeholder="Password">
+                <input id="admin-role" class="swal2-input" placeholder="Role">
             `,
             focusConfirm: false,
             showCancelButton: true,
@@ -112,15 +115,17 @@ include __DIR__ . "../../../includes/footer.php";
                 const name = document.getElementById('admin-name').value;
                 const email = document.getElementById('admin-email').value;
                 const password = document.getElementById('admin-password').value;
+                const role =document.getElementById('admin-role').value;
 
-                if (!name || !email || !password) {
+                if (!name || !email || !password || !role) {
                     Swal.showValidationMessage(`Please enter valid values.`);
                 }
 
                 return {
                     name: name,
                     email: email,
-                    password: password
+                    password: password,
+                    role: role
                 }
             }
         }).then((result) => {
@@ -128,7 +133,8 @@ include __DIR__ . "../../../includes/footer.php";
                 const {
                     name,
                     email,
-                    password
+                    password,
+                    role
                 } = result.value;
 
                 fetch('add_admin.php', {
@@ -139,7 +145,8 @@ include __DIR__ . "../../../includes/footer.php";
                         body: JSON.stringify({
                             name: name,
                             email: email,
-                            password: password
+                            password: password,
+                            role: role
                         })
                     })
                     .then(response => {

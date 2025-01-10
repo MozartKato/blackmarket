@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 31, 2024 at 04:22 AM
+-- Generation Time: Jan 10, 2025 at 08:00 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.12
 
@@ -31,16 +31,16 @@ CREATE TABLE `admins` (
   `Id` int NOT NULL,
   `Name` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL
+  `Password` varchar(255) NOT NULL,
+  `role` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`Id`, `Name`, `Email`, `Password`) VALUES
-(1, 'Muhammad Yazid', 'coba@gmail.com', '$2y$10$vdDNv7rLxSA.rN8iUXQ7Iu8L/zhoP9RGdEI9GZroiUtvxF.M5f1M2'),
-(4, 'Angon Fabregas', 'angon@fabregas', '$2y$10$oww7OdJYxgftIA0.fdnP5eU/xqVw8n9GPRiWNrcJezPcUFcdU5Bgu');
+INSERT INTO `admins` (`Id`, `Name`, `Email`, `Password`, `role`) VALUES
+(1, 'Atmin Utama', 'admin@adminpusat', '$2y$10$lhGXF0XqpUNWZByPiofEYeqUs7jNWnEmWXf57p5MBlKj2i9zy5Efy', 'superadmin');
 
 -- --------------------------------------------------------
 
@@ -52,17 +52,6 @@ CREATE TABLE `categories` (
   `Id` int NOT NULL,
   `Category` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`Id`, `Category`) VALUES
-(9, 'Assault Riffle'),
-(10, 'Pistol'),
-(11, 'Meele'),
-(13, 'Sniper Rifle'),
-(14, 'Bullets');
 
 -- --------------------------------------------------------
 
@@ -76,17 +65,6 @@ CREATE TABLE `customers` (
   `Email` varchar(255) NOT NULL,
   `No_telepon` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`Id`, `Name`, `Email`, `No_telepon`) VALUES
-(1, 'Muhammad Yazid', 'meyazid9@gmail.com', '08247282374'),
-(2, 'Ambar Pisang', 'lelepolkadot@anjay.com', '0896454467'),
-(3, 'Immanuel Julianto', 'kriminal@banget', '087862347323'),
-(4, 'Leonard Noveno Putra', 'veno@gbk.com', '0834636745'),
-(5, 'Yulius Setiawan', 'yulius@setiawan', '09876543456');
 
 -- --------------------------------------------------------
 
@@ -103,16 +81,6 @@ CREATE TABLE `orders` (
   `Discount` float DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`Id`, `Admin_id`, `Customer_id`, `Created_at`, `Total_payment`, `Discount`) VALUES
-(39, 4, 4, '2024-10-03 07:44:37', '1080000.00', 10),
-(40, 4, 3, '2024-10-03 07:45:37', '29682240.00', 2),
-(41, 1, NULL, '2024-10-03 07:56:42', '30000.00', 0),
-(42, 1, 3, '2024-10-06 03:00:54', '5427000.00', 10);
-
 -- --------------------------------------------------------
 
 --
@@ -128,18 +96,6 @@ CREATE TABLE `order_details` (
   `Subtotal` decimal(10,2) GENERATED ALWAYS AS ((`Price` * `Quantity`)) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `order_details`
---
-
-INSERT INTO `order_details` (`Id`, `Order_id`, `Product_id`, `Quantity`, `Price`) VALUES
-(44, 39, 11, 1, '1200000.00'),
-(45, 40, 8, 1, '30000000.00'),
-(46, 40, 15, 18, '16000.00'),
-(47, 41, 14, 1, '30000.00'),
-(48, 42, 14, 1, '30000.00'),
-(49, 42, 10, 1, '6000000.00');
-
 -- --------------------------------------------------------
 
 --
@@ -154,20 +110,6 @@ CREATE TABLE `products` (
   `Stock` int NOT NULL,
   `image_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`Id`, `Name`, `Category_id`, `Price`, `Stock`, `image_path`) VALUES
-(8, 'Magnum Research Desert Eagle .50 AE Brushed Chrome', 10, 30000000, 11, '/uploads/dg.png'),
-(9, 'Ak-47', 9, 4300000, 12, '/uploads/pngimg.com - ak47_PNG15449.png'),
-(10, 'Colt Diamondback Revolver', 10, 6000000, 4, '/uploads/596338.jpg'),
-(11, 'Katana', 11, 1200000, 10, '/uploads/katana.png'),
-(12, 'Artic Warfare Magnum (AWM)', 13, 120000000, 12, '/uploads/wp5289375-awm-gun-wallpapers.jpg'),
-(14, '.300 Winchester Magnum /pcs', 14, 30000, 297, '/uploads/pelor.png'),
-(15, '.50 Action Express (AE) /pcs', 14, 16000, 504, '/uploads/pelor1.jpg'),
-(16, '7.62x39 110gr Armour Piercing 1 pack (30pcs)', 14, 80000, 670, '/uploads/peloranjay.png');
 
 --
 -- Indexes for dumped tables
@@ -220,37 +162,37 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

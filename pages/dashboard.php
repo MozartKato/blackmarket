@@ -29,6 +29,7 @@ include "../includes/header.php";
     <!-- Ringkasan Data -->
     <div class="summary">
         <?php
+        echo $_SESSION['admin_role'];
         $cards = [
             ['Total Penjualan Hari Ini', "Rp. " . number_format($todaySales ?? 0, 0, ',', '.')],
             ['Total Penjualan Minggu Ini', "Rp. " . number_format($weekSales ?? 0, 0, ',', '.')],
