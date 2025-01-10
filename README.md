@@ -46,3 +46,10 @@ Follow these steps to set up and use the application:
 
 ### 3️⃣ Run the Application
 Run it on your server!
+
+### 🔑 Default Login Credentials
+Use the following credentials to log in for the first time:
+
+#### Email: admin@adminpusat
+#### Password: admin
+Note: All passwords are securely hashed using PHP's default encryption algorithm (password_hash) for maximum security.
