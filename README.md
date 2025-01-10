@@ -53,3 +53,9 @@ Use the following credentials to log in for the first time:
 #### Email: admin@adminpusat
 #### Password: admin
 Note: All passwords are securely hashed using PHP's default encryption algorithm (password_hash) for maximum security.
+
+
+## 📜 License  
+
+This project is open-source and available under the [MIT License](LICENSE).  
+
